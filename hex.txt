@@ -1,0 +1,53 @@
+Übungen zu Rainer Oechsle
+Entwicklung verteilter Anwendungen Hochschule Trier
+FB Informatik
+Übungsblatt 1-1
+ 1. Aufgabe: Entwickeln Sie ein Programm, mit dem Sie eine Datei einer beliebigen Größe erzeugen!
+Geben Sie den Dateinamen der Datei sowie die Anzahl der Bytes als Kommandozeilenargumente an!
+Ihr Programm soll dann diese Datei erzeugen und entsprechend viele Bytes in die Datei schreiben.
+Der Inhalt der Datei ist beliebig. Prüfen Sie nach, ob Ihre Datei am Ende genau so groß ist, wie sie
+sein soll!
+ 2. Aufgabe: In der Vorlesung wurde die Methode format der Klasse PrintStream nicht behandelt.
+Schauen Sie sich die Verwendung dieser Methode an! Bereiten Sie sich so vor, dass Sie einen kurzen
+Vortrag (ca. 3 Minuten) über die Benutzung dieser Methode halten können und dabei die Verwendung
+dieser Methode an einem ausführbaren Beispiel erläutern können!
+ 3. Aufgabe: Schreiben Sie ein Programm, mit dem Sie den Inhalt einer Datei in Hexadezimaldarstellung
+auf den Bildschirm ausgeben! Geben Sie immer 16 Bytes pro Zeile aus und geben Sie zu
+Beginn jeder Zeile die Nummer des ersten Bytes der Zeile ebenfalls in Hexadezimaldarstellung an!
+Die Zählung beginnt bei 0. Der Name der auszugebenden Datei soll als Kommandozeilenargument
+angegeben werden. Verwenden Sie zur Ausgabe die in Aufgabe 2 betrachtete Methode format!
+ 4. Aufgabe: Entwickeln Sie ein Dateikopier-Programm! Kopieren Sie die Datei byteweise wie im
+Beispiel der Vorlesung! Messen Sie dabei die Zeit, die der gesamte Kopiervorgang dauert und geben
+Sie diese Zeit am Ende aus! Stellen Sie zwei Varianten Ihres Kopierprogramms her:
+ - eine mit FileInputStream und FileOutputStream wie in der Vorlesung
+ - und eine mit darauf aufsetzendem BufferedInputStream und BufferedOutputStream.
+ Führen Sie nun beide Programme aus und kopieren Sie eine möglichst große Datei (mehrere MB)!
+Dabei können Sie u.a. eine Datei verwenden, die Sie mit dem Programm aus Aufgabe 1 erzeugt
+haben. Vergleichen Sie die Ausführungszeiten!
+ 5. Aufgabe: Probieren Sie die Klasse PushbackInputStream aus! Was passiert, wenn man mehr
+Zeichen mit unread zurückstellt als Pufferplatz vorhanden ist?
+Übungen zu Rainer Oechsle
+Entwicklung verteilter Anwendungen Hochschule Trier
+FB Informatik
+Übungsblatt 1-2
+ 6. Aufgabe: Schreiben Sie eine Ausgabeklasse zur Vervielfältigung der Ausgabe! Diese Klasse soll
+aus OutputStream abgeleitet sein und im Konstruktor beliebig viele OutputStream-Objekte akzeptieren
+(als Feld oder als Varargs). Jedes Schreiben soll auf alle Ausgabeströme vervielfältigt werden.
+Achten Sie darauf, dass Sie alle Methoden der abstrakten Klasse OutputStream überschreiben!
+Probieren Sie Ihre neue Klasse aus!
+ 7. Aufgabe:
+ a) Schreiben Sie mit Hilfe von DataOutputStream in eine Datei und/oder ein ByteArray einen
+boolean-, short-, int-, long-, float- und double-Wert sowie einen String jeweils mit writeBytes,
+writeChars und writeUTF! Betrachten Sie das Ergebnis! Bemühen Sie sich, jedes Byte zu verstehen,
+insbesondere auch die UTF-Ausgabe!
+ b) Lesen Sie die Ausgabe mit den entsprechend dazu passenden readXyz-Methoden der Klasse DataInputStream
+wieder ein, soweit es passende readXyz-Methoden dazu gibt! Zu writeBytes und
+writeChars gibt es keine entsprechenden Gegenstücke, zu writeUTF aber schon. Warum ist das so?
+Die Antwort finden Sie leicht durch Betrachtung der entsprechenden Ausgabe von Teilaufgabe a.
+Lassen Sie für das Einlesen deshalb die Ausgaben von writeBytes und writeChars weg! Prüfen Sie für
+die restlichen Eingaben, ob Sie die zuvor ausgegebenen Werte wieder zurück erhalten!
+ c) Wie wird das Ende der Eingabe bei einem DataInputStream von der Anwendung erkannt?
+ d) Lesen Sie nun Daten mit readXyz-Methoden ein, die nicht mit der entsprechenden writeXyzMethode
+geschrieben wurden (also z.B. Bytes, die mit writeLong ausgegeben wurden, mit readShort
+lesen)! Versuchen Sie die Effekte zu erklären!
+Hinweis: Alle Aufgaben auf Blatt 1 sind keine ASB-Aufgaben.
