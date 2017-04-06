@@ -18,7 +18,6 @@ public class Aufgabe7 {
 
             byte bytes[] = {'a', 'b', 'c'};
             dos.write(bytes);
-            dis.read(bytes, 0, 3);
             dos.writeBoolean(true);
             dos.writeShort(1);
             dos.writeInt(2);
@@ -29,7 +28,6 @@ public class Aufgabe7 {
             dos.writeChars("HalloChars");
             dos.writeUTF("HalloUTF");
 
-            dos.flush();
             System.out.println();
             System.out.println(bytes);
 

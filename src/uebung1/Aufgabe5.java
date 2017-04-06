@@ -15,11 +15,14 @@ public class Aufgabe5 {
         try (FileInputStream fis = new FileInputStream("hex.txt");
             PushbackInputStream pis = new PushbackInputStream(fis,1); ){
 
-            pis.unread(1337);
-            pis.unread(2337);
+            int b = pis.read();
 
-            System.out.println(pis.read() + " | " + pis.read());
+            System.out.format("%X",b);
 
+            pis.unread(b);
+            pis.unread(b);
+
+            System.out.format("%X",pis.read());
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         } catch (IOException e1) {

@@ -1,4 +1,4 @@
-package uebung1;
+package util;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -6,11 +6,11 @@ import java.io.OutputStream;
 /**
  * Created by David on 24.03.2017.
  */
-public class Aufgabe6 extends OutputStream {
+public class MultiOutputStream extends OutputStream {
 
     private OutputStream streams[];
 
-    public Aufgabe6(OutputStream... streams) {
+    public MultiOutputStream(OutputStream... streams) {
         this.streams = new OutputStream[streams.length];
         for (int i = 0; i < streams.length; ++i) {
             this.streams[i] = streams[i];
@@ -50,16 +50,6 @@ public class Aufgabe6 extends OutputStream {
         for (int i = 0; i < streams.length; ++i) {
             streams[i].close();
         }
-    }
-
-    public static void main(String args[]) {
-
-        try (Aufgabe6 a = new Aufgabe6(System.out, System.out);) {
-            a.write('a');
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 }

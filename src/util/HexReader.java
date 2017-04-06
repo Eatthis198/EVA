@@ -1,19 +1,27 @@
-package uebung1;
+package util;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * Created by David on 24.03.2017.
+ * Created by David on 04.04.2017.
  */
-public class Aufgabe3 {
+public class HexReader {
 
-    private static final String file = "Point.txt";
+    private static HexReader instance;
 
+    private HexReader(){}
 
-    public static void main(String args[]) {
+    public static HexReader getInstance(){
+        if(instance == null){
+            instance = new HexReader();
+        }
+        return instance;
+    }
 
-
+    public void readFile(String file){
         LinkedList<Byte> bytes = new LinkedList<>();
 
         try  (FileInputStream is = new FileInputStream(file)){
@@ -41,8 +49,6 @@ public class Aufgabe3 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

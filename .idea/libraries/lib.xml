@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/xstream-distribution-1.4.9-bin/xstream-1.4.9/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Documents/xstream-distribution-1.4.9-bin/xstream-1.4.9/lib" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Documents/xstream-distribution-1.4.9-bin/xstream-1.4.9/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Documents/xstream-distribution-1.4.9-bin/xstream-1.4.9/lib" recursive="false" type="SOURCES" />
+  </library>
+</component>
