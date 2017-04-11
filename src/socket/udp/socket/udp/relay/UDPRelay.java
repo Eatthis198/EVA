@@ -92,15 +92,15 @@ public class UDPRelay {
 class RelayServerThread implements Runnable {
 
     private int port, clientPort;
-    private InetAddress adress, clientAdress;
+    private InetAddress address, clientAddress;
     private DatagramPacket packet;
     private SyncStack<Integer> ports;
 
     public RelayServerThread(SyncStack<Integer> ports, int port, InetAddress adress, DatagramPacket packet) {
         this.port = port;
         this.clientPort = packet.getPort();
-        this.adress = adress;
-        this.clientAdress = packet.getAddress();
+        this.address = adress;
+        this.clientAddress = packet.getAddress();
         this.packet = packet;
         this.ports = ports;
     }
@@ -110,13 +110,13 @@ class RelayServerThread implements Runnable {
         int sockPort = ports.pop();
         try (DatagramSocket sock = new DatagramSocket(sockPort)) {
 
-            packet.setAddress(adress);
+            packet.setAddress(address);
             packet.setPort(port);
             sock.send(packet);
 
             sock.receive(packet);
             packet.setPort(clientPort);
-            packet.setAddress(clientAdress);
+            packet.setAddress(clientAddress);
 
             sock.send(packet);
         } catch (SocketException e) {
