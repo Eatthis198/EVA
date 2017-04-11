@@ -1,0 +1,130 @@
+package socket.udp.socket.udp.relay;
+
+import util.SyncStack;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by David on 11.04.2017.
+ */
+public class UDPRelay {
+
+    private static SyncStack<Integer> ports;
+
+
+    /**
+     * Methode zum Starten des UDP-Relays.
+     *
+     * @param inSocket         {@link DatagramSocket}, über das
+     *                         Datagramme zum Weiterleiten empfangen werden sollen.
+     * @param addressToRelayTo Adresse des Rechners, an den die
+     *                         über inSocket empfagenen Datagramme weitergeleitet werden
+     *                         sollen.
+     * @param portToRelayTo    Portnummer, an die die über inSocket
+     *                         empfagenen Datagramme weitergeleitet werden sollen.
+     * @param controlReader    {@link Reader}, von dem gelesen
+     *                         werden soll, ob ein über inSocket empfangenes Datagramm
+     *                         weitergeleitet oder verworfen werden soll.
+     * @throws IOException Wird ausgelöst, wenn es bei der
+     *                     UDP-Kommunikation zu einem Ein-/Ausgabefehler kommt.
+     */
+    public static void runUDPRelay(DatagramSocket inSocket,
+                                   InetAddress addressToRelayTo,
+                                   int portToRelayTo,
+                                   Reader controlReader)
+            throws IOException {
+        // Hier ergänzen...
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(4, 10, 101,
+                TimeUnit.DAYS, new LinkedBlockingDeque<>());
+
+
+        while (true) {
+            DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+            inSocket.receive(packet);
+
+            char input = (char) controlReader.read();
+            if (input == 'j') {
+                pool.execute(new RelayServerThread(ports, portToRelayTo, addressToRelayTo,
+                        packet));
+            }
+
+        }
+
+    }
+
+
+    /**
+     * Hauptprogramm. Als Kommandozeilenargumente sollen die
+     * Portnummer für den Empfang von Datagrammen sowie Adresse
+     * und Port für die Weiterleitung der empfangenen Datagramme
+     * angegeben werden.
+     */
+    public static void main(String[] args) throws IOException {
+        if (args.length != 3)
+            return;
+
+
+        int inPort = Integer.parseInt(args[0]);
+        InetAddress addressToRelayTo =
+                InetAddress.getByName(args[1]);
+        int portToRelayTo = Integer.parseInt(args[2]);
+
+        for (int i = 4711; i < 4711 + 10; i++)
+            if (i != inPort && i != portToRelayTo) ports.push(i);
+
+        Reader controlReader = new InputStreamReader(System.in);
+        try (DatagramSocket dgSocket = new DatagramSocket(inPort)) {
+            UDPRelay.runUDPRelay(dgSocket, addressToRelayTo,
+                    portToRelayTo, controlReader);
+        }
+    }
+}
+
+class RelayServerThread implements Runnable {
+
+    private int port, clientPort;
+    private InetAddress adress, clientAdress;
+    private DatagramPacket packet;
+    private SyncStack<Integer> ports;
+
+    public RelayServerThread(SyncStack<Integer> ports, int port, InetAddress adress, DatagramPacket packet) {
+        this.port = port;
+        this.clientPort = packet.getPort();
+        this.adress = adress;
+        this.clientAdress = packet.getAddress();
+        this.packet = packet;
+        this.ports = ports;
+    }
+
+    @Override
+    public void run() {
+        int sockPort = ports.pop();
+        try (DatagramSocket sock = new DatagramSocket(sockPort)) {
+
+            packet.setAddress(adress);
+            packet.setPort(port);
+            sock.send(packet);
+
+            sock.receive(packet);
+            packet.setPort(clientPort);
+            packet.setAddress(clientAdress);
+
+            sock.send(packet);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            ports.push(sockPort);
+        }
+    }
+}

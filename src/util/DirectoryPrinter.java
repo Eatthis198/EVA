@@ -3,10 +3,12 @@ package util;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
-import java.nio.*;
 
 /**
  * Created by David on 06.04.2017.
@@ -16,14 +18,14 @@ public class DirectoryPrinter {
 
     public static void printTree(Path path, PrintStream printStream, boolean deleter) throws IOException {
 
-//        Files.walkFileTree(path, new MyFileVisitor(printStream, deleter));
+        //Files.walkFileTree(path, new MyFileVisitor(printStream, deleter));
         walkFileTreeRecursive(path, new MyFileVisitor(printStream, deleter));
     }
 
     private static FileVisitResult walkFileTreeRecursive(Path path, FileVisitor<Path> visitor) throws IOException {
 
         File file = path.toAbsolutePath().toFile();
-       // File file = path.toFile();
+        // File file = path.toFile();
         if (file.isDirectory()) {
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
             visitor.preVisitDirectory(path, attrs);

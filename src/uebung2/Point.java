@@ -13,7 +13,7 @@ public class Point implements Serializable {
 
     private Point b;
 
-    private static int serialVersionUID = 43981;
+    private static final long serialVersionUID = 43981;
 
     public Point(int x, int y) {
         this.x = x;
@@ -36,16 +36,16 @@ public class Point implements Serializable {
         this.y = y;
     }
 
-    public void setB(Point newB){
+    public void setB(Point newB) {
         b = newB;
     }
 
-    private static Object deepCopy(Object src){
+    private static Object deepCopy(Object src) {
 
         Object dst = null;
 
-        try(ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos);) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             ObjectOutputStream oos = new ObjectOutputStream(bos);) {
 
             oos.writeObject(src);
             ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
@@ -72,7 +72,7 @@ public class Point implements Serializable {
                      new FileInputStream(file));) {
 
             Point p = new Point(1, 2);
-            Point b = new Point(5,6);
+            Point b = new Point(5, 6);
             p.setB(b);
 
             oos.writeObject(p);
