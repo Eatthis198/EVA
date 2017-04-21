@@ -57,11 +57,11 @@ public class UDPRelay {
             if (input == 'j') {
                 System.out.println("packet wird weitergeleitet!");
                 pool.execute(new RelayServerThread(ports, portToRelayTo, addressToRelayTo,
-                        packet));
+                        packet, controlReader));
             }
 
-            controlReader.reset();
-            //controlReader = new InputStreamReader(System.in);
+            //controlReader.reset();
+            controlReader = new InputStreamReader(System.in);
 
         }
 
@@ -102,14 +102,17 @@ class RelayServerThread implements Runnable {
     private InetAddress address, clientAddress;
     private DatagramPacket packet;
     private SyncStack<Integer> ports;
+    private Reader controlReader;
 
-    public RelayServerThread(SyncStack<Integer> ports, int port, InetAddress adress, DatagramPacket packet) {
+    public RelayServerThread(SyncStack<Integer> ports, int port, InetAddress adress, DatagramPacket packet,
+                                Reader controlReader) {
         this.port = port;
         this.clientPort = packet.getPort();
         this.address = adress;
         this.clientAddress = packet.getAddress();
         this.packet = packet;
         this.ports = ports;
+        this.controlReader = controlReader;
     }
 
     @Override
@@ -124,9 +127,14 @@ class RelayServerThread implements Runnable {
             System.out.println("packet sent to server!");
 
             sock.receive(packet);
-            // fragen ob ich schicken soll
-
             System.out.println("packet received from server!");
+            // fragen ob ich schicken soll
+           // controlReader.reset();
+            controlReader = new InputStreamReader(System.in);
+            System.out.println("soll das packet an den client gesendet werden");
+            if((char)controlReader.read() != 'j')
+                return;
+
 
             packet.setPort(clientPort);
             packet.setAddress(clientAddress);

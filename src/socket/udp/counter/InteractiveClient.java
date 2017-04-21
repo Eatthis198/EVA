@@ -49,8 +49,8 @@ public class InteractiveClient
                 }
                 catch (Exception e)
                 {
-                    System.err.println("RIP");
-                    e.printStackTrace();
+                    System.err.println("RIP --- TIMEOUT");
+                    //e.printStackTrace();
                 }
             }
 
