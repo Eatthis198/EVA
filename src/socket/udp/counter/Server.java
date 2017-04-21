@@ -73,6 +73,7 @@ public class Server
             default:
                 break;
         }
+        System.out.println(request + " counter is now: " + counter);
     }
 
     public static void main(String args[])

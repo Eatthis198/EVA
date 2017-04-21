@@ -13,7 +13,7 @@ import java.net.SocketException;
 public class InteractiveClient
 {
 
-    private static int timeout = 2000; // 2 seconds
+    private static int timeout = 20000; // 2 seconds
 
     public static void main(String args[])
     {
@@ -43,12 +43,14 @@ public class InteractiveClient
                 udpSocket.send(input, serverAddr, port);
                 try
                 {
+                    System.out.println("now waiting for reply...");
                     String reply = udpSocket.receive(20);
                     System.out.println("Counter = " + reply);
                 }
                 catch (Exception e)
                 {
-
+                    System.err.println("RIP");
+                    e.printStackTrace();
                 }
             }
 

@@ -51,11 +51,17 @@ public class UDPRelay {
             DatagramPacket packet = new DatagramPacket(new byte[100], 100);
             inSocket.receive(packet);
 
+            System.out.println("soll das packet weitergeleitet werden?");
             char input = (char) controlReader.read();
+            System.out.println("input read!");
             if (input == 'j') {
+                System.out.println("packet wird weitergeleitet!");
                 pool.execute(new RelayServerThread(ports, portToRelayTo, addressToRelayTo,
                         packet));
             }
+
+            controlReader.reset();
+            //controlReader = new InputStreamReader(System.in);
 
         }
 
@@ -72,6 +78,7 @@ public class UDPRelay {
         if (args.length != 3)
             return;
 
+        ports = new SyncStack<>();
 
         int inPort = Integer.parseInt(args[0]);
         InetAddress addressToRelayTo =
@@ -114,11 +121,19 @@ class RelayServerThread implements Runnable {
             packet.setPort(port);
             sock.send(packet);
 
+            System.out.println("packet sent to server!");
+
             sock.receive(packet);
+            // fragen ob ich schicken soll
+
+            System.out.println("packet received from server!");
+
             packet.setPort(clientPort);
             packet.setAddress(clientAddress);
 
             sock.send(packet);
+
+            System.out.println("packet sent to client");
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
