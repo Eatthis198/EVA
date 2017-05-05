@@ -5,31 +5,42 @@ import java.util.Stack;
 /**
  * Created by David on 11.04.2017.
  */
-public class SyncStack <T> {
+public class SyncStack<T>
+{
 
     private Stack<T> stack;
 
-    public SyncStack(){
+    public SyncStack()
+    {
         stack = new Stack<T>();
     }
 
-    public SyncStack(T... startValues){
+    @SafeVarargs
+    public SyncStack(T... startValues)
+    {
         this();
-        for(T t:startValues){
+        for (T t : startValues)
+        {
             stack.push(t);
         }
     }
 
-    public synchronized void push(T t){
+    public synchronized void push(T t)
+    {
         stack.push(t);
         notify();
     }
 
-    public synchronized T pop(){
-        while(stack.isEmpty()){
-            try {
+    public synchronized T pop()
+    {
+        while (stack.isEmpty())
+        {
+            try
+            {
                 wait();
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e)
+            {
                 e.printStackTrace();
             }
         }
