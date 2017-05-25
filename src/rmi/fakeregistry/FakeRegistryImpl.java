@@ -26,7 +26,6 @@ public class FakeRegistryImpl extends UnicastRemoteObject implements FakeRegistr
 
     @Override
     public void rebind(String name, Remote obj) throws RemoteException {
-
         registry.rebind(name, obj);
         try {
             Remote o = registry.lookup(name);

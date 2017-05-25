@@ -12,6 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class Client extends UnicastRemoteObject implements MesswertClient {
 
     private int start, end;
+    private MesswertServer server;
 
     public Client(int port, int start, int end) throws RemoteException, NotBoundException {
         super();
@@ -20,9 +21,13 @@ public class Client extends UnicastRemoteObject implements MesswertClient {
         this.end = end;
 
         Registry registry = LocateRegistry.getRegistry(port);
-        MesswertServer server = (MesswertServer) registry.lookup("MesswertServer");
+        server = (MesswertServer) registry.lookup("MesswertServer");
 
         server.registerClient(this, start, end);
+    }
+
+    public void registerAdditionalInterval(int start, int end) throws RemoteException {
+        server.registerClient(this,start,end);
     }
 
     @Override
