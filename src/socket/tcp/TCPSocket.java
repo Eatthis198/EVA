@@ -42,10 +42,15 @@ public class TCPSocket implements AutoCloseable {
         int in;
 
         while (/*istream.ready() && */(in = istream.read()) != '\n') {
+            if(index >= data.length){
+
+                break;
+            }
             data[index++] = (char) in;
         }
 
-        return index == 0 ? null : new String(data,0,index-1);
+        return index == 0 ? null : new String(data,0,index -1 ); //telnet
+        //return index == 0 ? null : new String(data,0,index);  // java
 
 //        return index == 0 ? "" : new String(data);
     }

@@ -27,8 +27,8 @@ public class Server
                 while (true)
                 {
 
-                    String request = tcpSocket.receiveLine();
-                    //String request = tcpSocket.receive();
+                    //String request = tcpSocket.receiveLine();
+                    String request = tcpSocket.receive();
 
                     if(request == null || request.isEmpty())
                         request = "null";
@@ -45,8 +45,8 @@ public class Server
 //                    }
 
                     String result = String.valueOf(counter);
-                    tcpSocket.sendLine(result);
-                    //tcpSocket.send(result);
+                    //tcpSocket.sendLine(result);
+                    tcpSocket.send(result+"\n");
 
                 }
 

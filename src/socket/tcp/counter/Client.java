@@ -21,7 +21,7 @@ public class Client {
                 TCPSocket tcpSocket = new TCPSocket(args[0], Integer.parseInt(args[1]))) {
             // set counter to zero
             System.out.println("setting counter to 0");
-            tcpSocket.send("reset");
+            tcpSocket.send("reset\n");
             String reply = tcpSocket.receive();
             // get count, initialize start time
             System.out.println("incrementing");
@@ -31,7 +31,7 @@ public class Client {
             for (int i = 0; i < count; i++) {
                 //    tcpSocket.sendLine("increment");
                 //   reply = tcpSocket.receiveLine();
-                tcpSocket.send("increment");
+                tcpSocket.send("increment\n");
                 // reply = tcpSocket.receive();
 
             }
