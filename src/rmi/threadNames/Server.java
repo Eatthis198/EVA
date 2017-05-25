@@ -16,7 +16,7 @@ public class Server {
     public Server(int port) {
         try {
             ThreadNamerImpl threadNamer = new ThreadNamerImpl();
-            //Registry registry = LocateRegistry.getRegistry(port);
+            //MyRegistry registry = LocateRegistry.getRegistry(port);
             Registry registry = LocateRegistry.createRegistry(port);
 
             registry.rebind("ThreadNamer",threadNamer);

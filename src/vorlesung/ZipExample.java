@@ -3,6 +3,7 @@ package vorlesung;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -12,6 +13,7 @@ import java.util.zip.GZIPOutputStream;
 public class ZipExample {
 
     public static void main(String args[]) throws IOException {
+
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         GZIPOutputStream zos = new GZIPOutputStream(baos);

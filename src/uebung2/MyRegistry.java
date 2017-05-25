@@ -8,7 +8,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 /**
  * Created by David on 06.04.2017.
  */
-public class Registry {
+public class MyRegistry {
 
     public static void main(String[] args) {
 

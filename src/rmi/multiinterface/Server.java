@@ -19,7 +19,7 @@ public class Server
         {
             FooBar fooBar = new FooBar();
 
-            //Registry registry = LocateRegistry.getRegistry(port);
+            //MyRegistry registry = LocateRegistry.getRegistry(port);
             Registry registry = LocateRegistry.createRegistry(port);
 
             registry.rebind("FooBar", fooBar);

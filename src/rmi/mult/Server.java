@@ -17,7 +17,7 @@ public class Server
         {
             MultiplyImpl myMultiply = new MultiplyImpl();
             Registry registry = LocateRegistry.getRegistry(port);
-            //Registry registry = LocateRegistry.createRegistry(port);
+            //MyRegistry registry = LocateRegistry.createRegistry(port);
             
             registry.rebind("MultiplyServer", myMultiply);
             System.out.println("multiply server is ready");
