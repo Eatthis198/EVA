@@ -14,7 +14,9 @@ public class Client {
         Registry registry = LocateRegistry.getRegistry(port);
 
         AsynchronusWorker worker = (AsynchronusWorker) registry.lookup("Async");
-        worker.work(2000,()-> System.out.println("done!"));
+
+        for (int i = 0; i < 10; i++)
+            worker.work(5000, () -> System.out.println("done!"));
     }
 
 }

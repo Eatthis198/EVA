@@ -11,34 +11,44 @@ import java.util.concurrent.*;
  */
 public class Server extends UnicastRemoteObject implements AsynchronusWorker {
 
-    private ThreadPoolExecutor poolExecutor;
-
     public Server(int port) throws RemoteException {
         super();
-
-        poolExecutor = new ThreadPoolExecutor(4,8,2000, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
         Registry registry = LocateRegistry.createRegistry(port);
         registry.rebind("Async",this);
     }
 
     @Override
     public void work(long time, Callback callback) throws RemoteException {
-        Future<?> future = poolExecutor.submit(()->seep(time));
-        try {
-            future.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new WorkerThread(r,callback).start();
+    }
+}
+
+class WorkerThread extends Thread{
+
+    private Runnable runnable;
+    private Callback callback;
+
+    public WorkerThread(Runnable r, Callback c){
+        runnable = r;
+        callback = c;
+    }
+
+    public void run(){
+        runnable.run();
         callback.callBack();
     }
 
-    private void seep(long time){
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }
